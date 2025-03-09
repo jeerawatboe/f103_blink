@@ -5,7 +5,7 @@ PRO_PREFIX=stm32_
 CPU_DEFINES=-DSTM32F1 -DSTM32F103C8Tx
 
 PROJECT = f103_blink
-
+FL=openocd -f interface/stlink.cfg -f target/stm32f1x.cfg -c "program f103_blink.bin verify 0x08000000 reset exit"
 DEFINES =-D__STARTUP_CLEAR_BSS -D__START=main
 
 OBJECTS += main.o
@@ -32,4 +32,7 @@ $(PROJECT).elf: $(OBJECTS)
 clean:
 	rm -f *.bin *.map *.elf
 	find . -name '*.o' -delete
+
+flash:
+	$(FL)
 
