@@ -39,8 +39,30 @@ int main(void)
 	delay();
 	led_toggle();
 	delay();
-
-
+	led_toggle();
+	delay();
+	led_toggle();
+	delay();
+	led_toggle();
+	delay();
+	led_toggle();
+	delay();
+	led_toggle();
+	delay();
+	led_toggle();
+	delay();
+	led_toggle();
+	delay();
+	led_toggle();
+	delay();
+	led_toggle();
+	delay();
+	led_toggle();
+	delay();
+	led_toggle();
+	delay();
+	led_toggle();
+	delay();
 
   /* Loop forever */
 	for(;;)

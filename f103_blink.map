@@ -211,7 +211,7 @@ END GROUP
 LOAD /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7-m/nofp/crtend.o
 LOAD /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7-m/nofp/crtn.o
 
-.text           0x0000000008000000      0x1b8
+.text           0x0000000008000000      0x218
  *(.isr_vector)
  .isr_vector    0x0000000008000000       0x44 startup.o
                 0x0000000008000000                __isr_vector
@@ -221,34 +221,34 @@ LOAD /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7-m/nofp/crtn.o
                 0x0000000008000044                SystemInit
  .text.delay    0x0000000008000050       0x2c main.o
                 0x0000000008000050                delay
- .text.main     0x000000000800007c       0x52 main.o
+ .text.main     0x000000000800007c       0xb2 main.o
                 0x000000000800007c                main
- *fill*         0x00000000080000ce        0x2 
+ *fill*         0x000000000800012e        0x2 
  .text.gpio_init
-                0x00000000080000d0       0x38 gpio.o
-                0x00000000080000d0                gpio_init
+                0x0000000008000130       0x38 gpio.o
+                0x0000000008000130                gpio_init
  .text.led_toggle
-                0x0000000008000108       0x1c gpio.o
-                0x0000000008000108                led_toggle
- .text          0x0000000008000124       0x8c startup.o
-                0x0000000008000124                Reset_Handler
-                0x00000000080001ac                DebugMon_Handler
-                0x00000000080001ac                HardFault_Handler
-                0x00000000080001ac                SysTick_Handler
-                0x00000000080001ac                PendSV_Handler
-                0x00000000080001ac                NMI_Handler
-                0x00000000080001ac                UsageFault_Handler
-                0x00000000080001ac                Default_Handler
-                0x00000000080001ac                MemManage_Handler
-                0x00000000080001ac                SVC_Handler
-                0x00000000080001ac                DEF_IRQHandler
-                0x00000000080001ac                BusFault_Handler
+                0x0000000008000168       0x1c gpio.o
+                0x0000000008000168                led_toggle
+ .text          0x0000000008000184       0x8c startup.o
+                0x0000000008000184                Reset_Handler
+                0x000000000800020c                DebugMon_Handler
+                0x000000000800020c                HardFault_Handler
+                0x000000000800020c                SysTick_Handler
+                0x000000000800020c                PendSV_Handler
+                0x000000000800020c                NMI_Handler
+                0x000000000800020c                UsageFault_Handler
+                0x000000000800020c                Default_Handler
+                0x000000000800020c                MemManage_Handler
+                0x000000000800020c                SVC_Handler
+                0x000000000800020c                DEF_IRQHandler
+                0x000000000800020c                BusFault_Handler
  *(.init)
- .init          0x00000000080001b0        0x4 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7-m/nofp/crti.o
-                0x00000000080001b0                _init
+ .init          0x0000000008000210        0x4 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7-m/nofp/crti.o
+                0x0000000008000210                _init
  *(.fini)
- .fini          0x00000000080001b4        0x4 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7-m/nofp/crti.o
-                0x00000000080001b4                _fini
+ .fini          0x0000000008000214        0x4 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7-m/nofp/crti.o
+                0x0000000008000214                _fini
  *crtbegin.o(.ctors)
  *crtbegin?.o(.ctors)
  *(EXCLUDE_FILE(*crtend.o *crtend?.o) .ctors)
@@ -262,49 +262,49 @@ LOAD /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7-m/nofp/crtn.o
  *(.rodata*)
  *(.eh_frame*)
 
-.glue_7         0x00000000080001b8        0x0
- .glue_7        0x00000000080001b8        0x0 linker stubs
+.glue_7         0x0000000008000218        0x0
+ .glue_7        0x0000000008000218        0x0 linker stubs
 
-.glue_7t        0x00000000080001b8        0x0
- .glue_7t       0x00000000080001b8        0x0 linker stubs
+.glue_7t        0x0000000008000218        0x0
+ .glue_7t       0x0000000008000218        0x0 linker stubs
 
-.vfp11_veneer   0x00000000080001b8        0x0
- .vfp11_veneer  0x00000000080001b8        0x0 linker stubs
+.vfp11_veneer   0x0000000008000218        0x0
+ .vfp11_veneer  0x0000000008000218        0x0 linker stubs
 
-.v4_bx          0x00000000080001b8        0x0
- .v4_bx         0x00000000080001b8        0x0 linker stubs
+.v4_bx          0x0000000008000218        0x0
+ .v4_bx         0x0000000008000218        0x0 linker stubs
 
-.iplt           0x00000000080001b8        0x0
- .iplt          0x00000000080001b8        0x0 main.o
+.iplt           0x0000000008000218        0x0
+ .iplt          0x0000000008000218        0x0 main.o
 
-.rel.dyn        0x00000000080001b8        0x0
- .rel.iplt      0x00000000080001b8        0x0 main.o
+.rel.dyn        0x0000000008000218        0x0
+ .rel.iplt      0x0000000008000218        0x0 main.o
 
 .ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
-                0x00000000080001b8                __exidx_start = .
+                0x0000000008000218                __exidx_start = .
 
 .ARM.exidx
  *(.ARM.exidx* .gnu.linkonce.armexidx.*)
-                0x00000000080001b8                __exidx_end = .
+                0x0000000008000218                __exidx_end = .
 
-.copy.table     0x00000000080001b8        0xc
-                0x00000000080001b8                . = ALIGN (0x4)
-                0x00000000080001b8                __copy_table_start__ = .
-                0x00000000080001b8        0x4 LONG 0x80001cc __etext
-                0x00000000080001bc        0x4 LONG 0x20000000 __data_start__
-                0x00000000080001c0        0x4 LONG 0x0 (__data_end__ - __data_start__)
-                0x00000000080001c4                __copy_table_end__ = .
+.copy.table     0x0000000008000218        0xc
+                0x0000000008000218                . = ALIGN (0x4)
+                0x0000000008000218                __copy_table_start__ = .
+                0x0000000008000218        0x4 LONG 0x800022c __etext
+                0x000000000800021c        0x4 LONG 0x20000000 __data_start__
+                0x0000000008000220        0x4 LONG 0x0 (__data_end__ - __data_start__)
+                0x0000000008000224                __copy_table_end__ = .
 
-.zero.table     0x00000000080001c4        0x8
-                0x00000000080001c4                . = ALIGN (0x4)
-                0x00000000080001c4                __zero_table_start__ = .
-                0x00000000080001c4        0x4 LONG 0x20000000 __bss_start__
-                0x00000000080001c8        0x4 LONG 0x0 (__bss_end__ - __bss_start__)
-                0x00000000080001cc                __zero_table_end__ = .
-                0x00000000080001cc                __etext = ALIGN (0x4)
+.zero.table     0x0000000008000224        0x8
+                0x0000000008000224                . = ALIGN (0x4)
+                0x0000000008000224                __zero_table_start__ = .
+                0x0000000008000224        0x4 LONG 0x20000000 __bss_start__
+                0x0000000008000228        0x4 LONG 0x0 (__bss_end__ - __bss_start__)
+                0x000000000800022c                __zero_table_end__ = .
+                0x000000000800022c                __etext = ALIGN (0x4)
 
-.data           0x0000000020000000        0x0 load address 0x00000000080001cc
+.data           0x0000000020000000        0x0 load address 0x000000000800022c
                 0x0000000020000000                __data_start__ = .
  *(vtable)
  *(.data*)
