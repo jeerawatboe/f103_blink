@@ -2,6 +2,7 @@
 #define __GPIO_H 
 
 #include "base.h"
+#include "stdbool.h"
 
 #define GPIOC_CRL_OFFSET         (0x00UL)
 #define GPIOC_CRL                (*(volatile unsigned int*)(GPIOC_PERIPHERAL + GPIOC_CRL_OFFSET))
@@ -18,5 +19,6 @@
 
 void gpio_init(void);
 void led_toggle(void);
+void led_write(bool state);
 
 #endif /* __GPIO_H */

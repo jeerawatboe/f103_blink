@@ -25,3 +25,16 @@ void led_toggle(void){
 
 }
 
+
+/*#TODO write led pin */
+void led_write(bool state){
+
+	if (state == 1){
+		GPIOC_ODR |= GPIOC13;
+
+	}
+	else if (state == 0){
+		GPIOC_ODR &= ~GPIOC13;	
+
+	}
+}

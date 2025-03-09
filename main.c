@@ -31,44 +31,15 @@ int main(void)
 	delay();
 	led_toggle();
 	delay();
-	led_toggle();
-	delay();
-	led_toggle();
-	delay();
-	led_toggle();
-	delay();
-	led_toggle();
-	delay();
-	led_toggle();
-	delay();
-	led_toggle();
-	delay();
-	led_toggle();
-	delay();
-	led_toggle();
-	delay();
-	led_toggle();
-	delay();
-	led_toggle();
-	delay();
-	led_toggle();
-	delay();
-	led_toggle();
-	delay();
-	led_toggle();
-	delay();
-	led_toggle();
-	delay();
-	led_toggle();
-	delay();
-	led_toggle();
-	delay();
 
   /* Loop forever */
 	for(;;)
 	{
-
 	
+		led_write(0);
+		delay();
+		led_write(1);
+		delay();
 
 	}
 }
