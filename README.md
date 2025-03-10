@@ -1,19 +1,60 @@
-# STM32F103C8T6 FROM SCRATCH USING VIM
- this repositories blink stm32f103c8t6 from scratch without ide using vim editer
+# STM32F103C8T6 Blink (Without IDE)
 
-## Editer
- vim NVIM v0.10.4\
- Build type: Release\
- LuaJIT 2.1.1713484068
+This repository demonstrates how to blink an LED on an STM32F103C8T6 microcontroller from scratch, without using any Integrated Development Environment (IDE). All the code is written using the Vim editor and relies on manual toolchain setup.
 
-## Make
- GNU Make 4.3\
- Built for x86_64-pc-linux-gnu\
- Copyright (C) 1988-2020 Free Software Foundation, Inc.
+## Project Description
 
-## Compiler 
- gcc version 10.3.1 20210621 (release) (15:10.3-2021.07-4)
+This project is designed for developers and hobbyists who want to learn how to set up and program an STM32F103C8T6 microcontroller without using an IDE such as STM32CubeIDE. The goal is to demonstrate a simple "blink" LED program that toggles an LED on and off using the STM32 hardware peripherals. The program is written using a minimal toolchain setup with `vim` as the editor and relies on `make` for building the project and `OpenOCD` for programming the STM32F103C8T6.
 
-## Flash
- Open On-Chip Debugger 0.12.0+dev-01888-ga168c6341 (2025-03-02-19:47)\
- Licensed under GNU GPL v2
+## Features
+
+- Blink an LED connected to the STM32F103C8T6
+- No IDE required
+- Uses Vim as the editor and manual toolchain setup
+- Cross-compiling with ARM GCC
+- Flashing with OpenOCD
+
+## System Requirements
+
+- STM32F103C8T6 microcontroller (commonly known as "Blue Pill")
+- ARM GCC toolchain (`arm-none-eabi-gcc`)
+- OpenOCD for flashing and debugging
+- Make utility for managing builds
+- Vim or your preferred text editor
+
+## Installation
+
+Follow these steps to set up the project and compile the code.
+
+### Step 1: Install Required Tools
+
+Before you can start, you need to install some required tools. On a Linux-based system, you can install them using the package manager:
+
+```bash
+sudo apt-get update
+sudo apt-get install gcc-arm-none-eabi openocd make vim
+```
+### Step 2: Clone the Repository
+
+Clone this repository to your local machine
+
+```bash
+https://github.com/jeerawatboe/f103_blink.git
+```
+### Step 3: Build the Project
+
+Once you've cloned the repository, navigate to the project folder and compile the code using make
+
+```bash
+make
+```
+### Step 4: Flash the Firmware
+
+To flash the firmware onto the STM32F103C8T6, use OpenOCD. The following command assumes you're using an ST-Link programmer/debugger
+
+```bash
+make flash
+```
+### Step 5: Observe the LED
+
+After flashing the firmware, the LED connected to the STM32F103C8T6 will begin blinking. You can connect an LED to the appropriate GPIO pin (e.g., PC13) through a current-limiting resistor to see it blink.
