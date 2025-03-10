@@ -14,7 +14,8 @@ OBJECTS = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SOURCES))
 OBJECTS := $(patsubst $(SRC_DIR)/%.s, $(OBJ_DIR)/%.o, $(OBJECTS))
 
 
-FL=openocd -f interface/stlink.cfg -f target/stm32f1x.cfg -c "program $(OBJ_DIR)/$(PROJECT).bin verify 0x08000000 reset exit"
+FL=openocd -f interface/stlink.cfg -f target/stm32f1x.cfg -c "program \
+	 $(OBJ_DIR)/$(PROJECT).bin verify 0x08000000 reset exit"
 DEFINES = -D__STARTUP_CLEAR_BSS -D__START=main
 
 TOOLCHAIN=arm-none-eabi-
@@ -29,11 +30,11 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
 	$(TOOLCHAIN)gcc $(CFLAGS) -c -o $@ $<
 
-$(OBJ_DIR)/$(PROJECT).elf: $(OBJECTS)
-	$(TOOLCHAIN)gcc $(LFLAGS) $^ $(CFLAGS) -o $@
-
 $(OBJ_DIR)/$(PROJECT).bin: $(OBJ_DIR)/$(PROJECT).elf
 	$(TOOLCHAIN)objcopy -O binary $< $@
+
+$(OBJ_DIR)/$(PROJECT).elf: $(OBJECTS)
+	$(TOOLCHAIN)gcc $(LFLAGS) $^ $(CFLAGS) -o $@
 
 clean:
 	rm -rf $(OBJ_DIR)/*
