@@ -47,16 +47,14 @@ Discarded input sections
  .debug_str     0x0000000000000000       0x94 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v7-m/nofp/crt0.o
  .ARM.attributes
                 0x0000000000000000       0x1b /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v7-m/nofp/crt0.o
+ .data          0x0000000000000000        0x0 build/startup.o
+ .bss           0x0000000000000000        0x0 build/startup.o
+ .text          0x0000000000000000        0x0 build/driver/gpio.o
+ .data          0x0000000000000000        0x0 build/driver/gpio.o
+ .bss           0x0000000000000000        0x0 build/driver/gpio.o
  .text          0x0000000000000000        0x0 build/main.o
  .data          0x0000000000000000        0x0 build/main.o
  .bss           0x0000000000000000        0x0 build/main.o
- .text.SystemInit
-                0x0000000000000000        0xc build/main.o
- .text.delay    0x0000000000000000       0x2c build/main.o
- .text.main     0x0000000000000000       0x46 build/main.o
- .comment       0x0000000000000000       0x34 build/main.o
- .ARM.attributes
-                0x0000000000000000       0x2d build/main.o
  .text          0x0000000000000000        0xc /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v7-m/nofp/libc_nano.a(lib_a-atexit.o)
  .data          0x0000000000000000        0x0 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v7-m/nofp/libc_nano.a(lib_a-atexit.o)
  .bss           0x0000000000000000        0x0 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v7-m/nofp/libc_nano.a(lib_a-atexit.o)
@@ -199,6 +197,8 @@ Linker script and memory map
 LOAD /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7-m/nofp/crti.o
 LOAD /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7-m/nofp/crtbegin.o
 LOAD /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v7-m/nofp/crt0.o
+LOAD build/startup.o
+LOAD build/driver/gpio.o
 LOAD build/main.o
 START GROUP
 LOAD /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7-m/nofp/libgcc.a
@@ -211,15 +211,47 @@ END GROUP
 LOAD /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7-m/nofp/crtend.o
 LOAD /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7-m/nofp/crtn.o
 
-.text           0x0000000008000000        0x8
+.text           0x0000000008000000      0x1f0
  *(.isr_vector)
+ .isr_vector    0x0000000008000000       0x44 build/startup.o
+                0x0000000008000000                __isr_vector
  *(.text*)
+ .text          0x0000000008000044       0x8c build/startup.o
+                0x0000000008000044                Reset_Handler
+                0x00000000080000cc                DebugMon_Handler
+                0x00000000080000cc                HardFault_Handler
+                0x00000000080000cc                SysTick_Handler
+                0x00000000080000cc                PendSV_Handler
+                0x00000000080000cc                NMI_Handler
+                0x00000000080000cc                UsageFault_Handler
+                0x00000000080000cc                Default_Handler
+                0x00000000080000cc                MemManage_Handler
+                0x00000000080000cc                SVC_Handler
+                0x00000000080000cc                DEF_IRQHandler
+                0x00000000080000cc                BusFault_Handler
+ .text.gpio_init
+                0x00000000080000d0       0x38 build/driver/gpio.o
+                0x00000000080000d0                gpio_init
+ .text.led_toggle
+                0x0000000008000108       0x1c build/driver/gpio.o
+                0x0000000008000108                led_toggle
+ .text.led_write
+                0x0000000008000124       0x44 build/driver/gpio.o
+                0x0000000008000124                led_write
+ .text.SystemInit
+                0x0000000008000168        0xc build/main.o
+                0x0000000008000168                SystemInit
+ .text.delay    0x0000000008000174       0x2c build/main.o
+                0x0000000008000174                delay
+ .text.main     0x00000000080001a0       0x46 build/main.o
+                0x00000000080001a0                main
  *(.init)
- .init          0x0000000008000000        0x4 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7-m/nofp/crti.o
-                0x0000000008000000                _init
+ *fill*         0x00000000080001e6        0x2 
+ .init          0x00000000080001e8        0x4 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7-m/nofp/crti.o
+                0x00000000080001e8                _init
  *(.fini)
- .fini          0x0000000008000004        0x4 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7-m/nofp/crti.o
-                0x0000000008000004                _fini
+ .fini          0x00000000080001ec        0x4 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7-m/nofp/crti.o
+                0x00000000080001ec                _fini
  *crtbegin.o(.ctors)
  *crtbegin?.o(.ctors)
  *(EXCLUDE_FILE(*crtend.o *crtend?.o) .ctors)
@@ -233,43 +265,49 @@ LOAD /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7-m/nofp/crtn.o
  *(.rodata*)
  *(.eh_frame*)
 
-.glue_7         0x0000000008000008        0x0
- .glue_7        0x0000000008000008        0x0 linker stubs
+.glue_7         0x00000000080001f0        0x0
+ .glue_7        0x00000000080001f0        0x0 linker stubs
 
-.glue_7t        0x0000000008000008        0x0
- .glue_7t       0x0000000008000008        0x0 linker stubs
+.glue_7t        0x00000000080001f0        0x0
+ .glue_7t       0x00000000080001f0        0x0 linker stubs
 
-.vfp11_veneer   0x0000000008000008        0x0
- .vfp11_veneer  0x0000000008000008        0x0 linker stubs
+.vfp11_veneer   0x00000000080001f0        0x0
+ .vfp11_veneer  0x00000000080001f0        0x0 linker stubs
 
-.v4_bx          0x0000000008000008        0x0
- .v4_bx         0x0000000008000008        0x0 linker stubs
+.v4_bx          0x00000000080001f0        0x0
+ .v4_bx         0x00000000080001f0        0x0 linker stubs
+
+.iplt           0x00000000080001f0        0x0
+ .iplt          0x00000000080001f0        0x0 build/startup.o
+
+.rel.dyn        0x00000000080001f0        0x0
+ .rel.iplt      0x00000000080001f0        0x0 build/startup.o
 
 .ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
-                0x0000000008000008                __exidx_start = .
+                0x00000000080001f0                __exidx_start = .
 
 .ARM.exidx
  *(.ARM.exidx* .gnu.linkonce.armexidx.*)
-                0x0000000008000008                __exidx_end = .
+                0x00000000080001f0                __exidx_end = .
 
-.copy.table     0x0000000008000008        0xc
-                0x0000000008000008                . = ALIGN (0x4)
-                0x0000000008000008                __copy_table_start__ = .
-                0x0000000008000008        0x4 LONG 0x800001c __etext
-                0x000000000800000c        0x4 LONG 0x20000000 __data_start__
-                0x0000000008000010        0x4 LONG 0x0 (__data_end__ - __data_start__)
-                0x0000000008000014                __copy_table_end__ = .
+.copy.table     0x00000000080001f0        0xc
+                0x00000000080001f0                . = ALIGN (0x4)
+                0x00000000080001f0                __copy_table_start__ = .
+                0x00000000080001f0        0x4 LONG 0x8000204 __etext
+                0x00000000080001f4        0x4 LONG 0x20000000 __data_start__
+                0x00000000080001f8        0x4 LONG 0x0 (__data_end__ - __data_start__)
+                0x00000000080001fc                __copy_table_end__ = .
 
-.zero.table     0x0000000008000014        0x8
-                0x0000000008000014                . = ALIGN (0x4)
-                0x0000000008000014                __zero_table_start__ = .
-                0x0000000008000014        0x4 LONG 0x20000000 __bss_start__
-                0x0000000008000018        0x4 LONG 0x0 (__bss_end__ - __bss_start__)
-                0x000000000800001c                __zero_table_end__ = .
-                0x000000000800001c                __etext = ALIGN (0x4)
+.zero.table     0x00000000080001fc        0x8
+                0x00000000080001fc                . = ALIGN (0x4)
+                0x00000000080001fc                __zero_table_start__ = .
+                0x00000000080001fc        0x4 LONG 0x20000000 __bss_start__
+                0x0000000008000200        0x4 LONG 0x0 (__bss_end__ - __bss_start__)
+                0x0000000008000204                __zero_table_end__ = .
+                0x0000000008000204                __etext = ALIGN (0x4)
 
-.data           0x0000000020000000        0x0 load address 0x000000000800001c
+.data           0x0000000020000000        0x0 load address 0x0000000008000204
                 0x0000000020000000                __data_start__ = .
  *(vtable)
  *(.data*)
@@ -291,6 +329,9 @@ LOAD /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7-m/nofp/crtn.o
                 0x0000000020000000                . = ALIGN (0x4)
                 0x0000000020000000                __data_end__ = .
 
+.igot.plt       0x0000000020000000        0x0
+ .igot.plt      0x0000000020000000        0x0 build/startup.o
+
 .bss            0x0000000020000000        0x0
                 0x0000000020000000                . = ALIGN (0x4)
                 0x0000000020000000                __bss_start__ = .
@@ -303,12 +344,14 @@ LOAD /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7-m/nofp/crtn.o
                 0x0000000020000000                __end__ = .
                 [!provide]                        PROVIDE (end = .)
  *(.heap*)
+ .heap          0x0000000020000000        0x0 build/startup.o
                 0x0000000020000000                __HeapLimit = .
 
-.stack_dummy    0x0000000020000000        0x0
+.stack_dummy    0x0000000020000000      0xc00
  *(.stack*)
+ .stack         0x0000000020000000      0xc00 build/startup.o
                 0x0000000020005000                __StackTop = (ORIGIN (RAM) + LENGTH (RAM))
-                0x0000000020005000                __StackLimit = (__StackTop - SIZEOF (.stack_dummy))
+                0x0000000020004400                __StackLimit = (__StackTop - SIZEOF (.stack_dummy))
                 0x0000000020005000                PROVIDE (__stack = __StackTop)
                 0x0000000000000001                ASSERT ((__StackLimit >= __HeapLimit), region RAM overflowed with stack)
 OUTPUT(build/f103_blink.elf elf32-littlearm)
@@ -318,3 +361,14 @@ LOAD linker stubs
                 0x0000000000000000       0x29
  .ARM.attributes
                 0x0000000000000000       0x1d /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v7-m/nofp/crti.o
+ .ARM.attributes
+                0x000000000000001d       0x1b build/startup.o
+ .ARM.attributes
+                0x0000000000000038       0x2d build/driver/gpio.o
+ .ARM.attributes
+                0x0000000000000065       0x2d build/main.o
+
+.comment        0x0000000000000000       0x33
+ .comment       0x0000000000000000       0x33 build/driver/gpio.o
+                                         0x34 (size before relaxing)
+ .comment       0x0000000000000033       0x34 build/main.o
