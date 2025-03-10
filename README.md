@@ -39,7 +39,7 @@ sudo apt-get install gcc-arm-none-eabi openocd make vim
 Clone this repository to your local machine
 
 ```bash
-https://github.com/jeerawatboe/f103_blink.git
+git clone https://github.com/jeerawatboe/f103_blink.git
 ```
 ### Step 3: Build the Project
 
