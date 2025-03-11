@@ -16,8 +16,8 @@ OBJECTS = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SOURCES))
 OBJECTS := $(patsubst $(SRC_DIR)/%.s, $(OBJ_DIR)/%.o, $(OBJECTS))
 
 # คำสั่งสำหรับ Flash ด้วย OpenOCD
-FL=openocd -f interface/stlink.cfg -f target/stm32f1x.cfg -c "program \
-	 $(OBJ_DIR)/$(PROJECT).bin verify 0x08000000 reset exit"
+FL=STM32_Programmer_CLI -c port=SWD -d build/f103_blink.bin 0x08000000 -rst
+
 
 DEFINES = -D__STARTUP_CLEAR_BSS -D__START=main
 TOOLCHAIN=arm-none-eabi-
