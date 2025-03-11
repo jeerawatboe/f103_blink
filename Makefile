@@ -41,7 +41,7 @@ $(OBJ_DIR)/$(PROJECT).bin: $(OBJ_DIR)/$(PROJECT).elf
 # ลิงก์ไฟล์ทั้งหมดเป็น ELF
 $(OBJ_DIR)/$(PROJECT).elf: $(OBJECTS)
 	$(TOOLCHAIN)gcc $(LFLAGS) $^ $(CFLAGS) -o $@
-
+	$(TOOLCHAIN)size $@
 # คำสั่งทำความสะอาด
 clean:
 	rm -rf $(OBJ_DIR)/*
